@@ -1,0 +1,20 @@
+<div class="card shadow-sm" [ngClass]="[margin, background]">
+  <ng-container *ngIf="isCountCard; else simpleCard">
+    <div class="card-body pb-0" [ngClass]="{'text-light': !background.includes('bg-light') && background}">
+      <div class="w-100 d-inline-flex justify-content-between align-items-center">
+        <span class="card-title mb-0 h5">{{title}}</span>
+        <i class="{{icon}}"></i>
+      </div>
+      <small [ngClass]="{'text-dark-emphasis': !background}">{{description}}</small>
+      <div class="text-center mt-4">
+        <ng-content select="[countCard]"></ng-content>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #simpleCard>
+    <div class="card-body">
+      <ng-content></ng-content>
+    </div>
+  </ng-template>
+</div>

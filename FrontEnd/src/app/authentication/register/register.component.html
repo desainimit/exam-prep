@@ -1,0 +1,77 @@
+<!-- Login 13 - Bootstrap Brain Component -->
+<div class="container min-vh-100 d-flex justify-content-center align-items-center">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+      <mat-card class="bg-white">
+        <mat-card-header class="border-bottom border-light-subtle p-3 p-md-4 p-xl-5">
+          <h1 class="fs-4 fw-normal text-center text-secondary mb-0">Welcome to our community!</h1>
+        </mat-card-header>
+        <mat-card-content class="p-3 p-md-4 p-xl-5">
+          <h2 class="fs-6 fw-normal text-center text-secondary mb-4">Sign up to your account</h2>
+          <form class="registrationForm" [formGroup]="registerForm" (ngSubmit)="submitForm()">
+            <div class="row gy-2 overflow-hidden">
+              <div class="col-12">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" formControlName="username" id="username" placeholder="Enter Username" [ngClass]="{'is-valid': registerForm.controls['username'].valid, 'is-invalid': registerForm.controls['username'].errors && isSubmitted}">
+                  <label for="username" class="form-label">Username</label>
+                  <div *ngIf="registerForm.controls['username'].errors && isSubmitted" class="invalid-feedback">
+                    <div *ngIf="registerForm.controls['username'].errors?.['required']">Username is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" formControlName="fullName" id="fullName" placeholder="Enter Full Name" [ngClass]="{'is-valid': registerForm.controls['fullName'].valid, 'is-invalid': registerForm.controls['fullName'].errors && isSubmitted}">
+                  <label for="fullName" class="form-label">Full Name</label>
+                  <div *ngIf="registerForm.controls['fullName'].errors && isSubmitted" class="invalid-feedback">
+                    <div *ngIf="registerForm.controls['fullName'].errors?.['required']">Full Name is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="form-floating mb-3">
+                  <input type="email" class="form-control" formControlName="email" id="email" placeholder="name@example.com" [ngClass]="{'is-valid': registerForm.controls['email'].valid, 'is-invalid': registerForm.controls['email'].errors && isSubmitted}">
+                  <label for="email" class="form-label">Email</label>
+                  <div *ngIf="registerForm.controls['email'].errors && isSubmitted" class="invalid-feedback">
+                    <div *ngIf="registerForm.controls['email'].errors?.['required']">Email is required</div>
+                    <div *ngIf="registerForm.controls['email'].errors?.['email']">Invalid email format</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="form-floating mb-3">
+                  <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password" [ngClass]="{'is-valid': registerForm.controls['password'].valid, 'is-invalid': registerForm.controls['password'].errors && isSubmitted}">
+                  <label for="password" class="form-label">Password</label>
+                  <div *ngIf="registerForm.controls['password'].errors && isSubmitted" class="invalid-feedback">
+                    <div *ngIf="registerForm.controls['password'].errors?.['required']">Password is required</div>
+                    <div *ngIf="registerForm.controls['password'].errors?.['minlength']">Password must be at least 6 characters</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="d-grid my-3">
+                  <ng-container *ngIf="isLoading">
+                    <div class="btn btn-primary btn-lg">
+                      <app-loader></app-loader>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngIf="!isLoading">
+                    <button class="btn btn-primary btn-lg" type="submit">Register</button>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="col-12">
+                <p class="m-0 text-secondary text-center">Already Registered?<a routerLink="/auth/login" class="link-primary text-decoration-none">Sign in</a></p>
+              </div>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

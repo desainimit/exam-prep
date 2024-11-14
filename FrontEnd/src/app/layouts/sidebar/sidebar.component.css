@@ -1,0 +1,37 @@
+mat-sidenav-container {
+  height: 100dvh;
+}
+
+mat-sidenav {
+  background-color: #232e51;
+  padding-top: 3.5rem;
+}
+
+.expanded {
+  width: 250px;
+}
+
+mat-sidenav .entry {
+  color: #97aac1;
+}
+
+mat-sidenav .entry.active,
+mat-sidenav .entry:hover {
+  color: #ffffff;
+}
+
+mat-sidenav-content {
+  padding-top: 3.5rem;
+}
+
+@media screen and (min-width: 600px) {
+  mat-sidenav-content {
+    padding-top: 4rem;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  mat-sidenav {
+    padding-top: 4rem;
+  }
+}

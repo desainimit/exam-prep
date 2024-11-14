@@ -1,0 +1,62 @@
+<!-- Login 13 - Bootstrap Brain Component -->
+<div class="container min-vh-100 d-flex justify-content-center align-items-center">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+      <!-- <div class="card border border-light-subtle rounded-3 shadow-sm"> -->
+      <mat-card class="bg-white">
+        <mat-card-header class="border-bottom border-light-subtle p-3 p-md-4 p-xl-5">
+          <h1 class="fs-4 fw-normal text-center text-secondary mb-0">Welcome back!</h1>
+        </mat-card-header>
+        <mat-card-content class="p-3 p-md-4 p-xl-5">
+          <h2 class="fs-6 fw-normal text-center text-secondary mb-4">Sign in to your account</h2>
+          <form class="loginForm" [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
+            <div class="row gy-2 overflow-hidden">
+              <div class="col-12">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" formControlName="email" id="email" placeholder="example@gmail.com" [ngClass]="{'is-valid': loginForm.controls['email'].valid, 'is-invalid': loginForm.controls['email'].errors && isSubmitted}">
+                  <label for="email" class="form-label">Email</label>
+                  <div *ngIf="loginForm.controls['email'].errors && isSubmitted" class="invalid-feedback">
+                    <div *ngIf="loginForm.controls['email'].errors?.['required']"> Email is required</div>
+                    <div *ngIf="loginForm.controls['email'].errors?.['email']">Invalid email format</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-floating mb-3">
+                  <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password" [ngClass]="{'is-valid': loginForm.controls['password'].valid, 'is-invalid': loginForm.controls['password'].errors && isSubmitted}">
+                  <label for="password" class="form-label">Password</label>
+                  <div *ngIf="loginForm.controls['password'].errors && isSubmitted" class="invalid-feedback">
+                    <div *ngIf="loginForm.controls['password'].errors?.['required']">Password is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="d-flex gap-2 justify-content-between">
+                  <a href="#!" class="link-primary text-decoration-none">Forgot password?</a>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="d-grid my-3">
+
+                  <ng-container *ngIf="isLoading">
+                    <div class="btn btn-primary btn-lg">
+                      <app-loader></app-loader>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngIf="!isLoading">
+                    <button class="btn btn-primary btn-lg" type="submit">Log in</button>
+                  </ng-container>
+
+                </div>
+              </div>
+              <div class="col-12">
+                <p class="m-0 text-secondary text-center">Don't have an account? <a routerLink="/auth/register" class="link-primary text-decoration-none">Sign up</a></p>
+              </div>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

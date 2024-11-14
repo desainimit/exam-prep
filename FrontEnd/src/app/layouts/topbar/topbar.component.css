@@ -1,0 +1,16 @@
+mat-toolbar {
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  /* background-color: #232E51; */
+}
+
+.left-side .logo{
+  height: 100%;
+  width: 100%;
+}
+
+.dropdown mat-icon-button {
+  height: inherit;
+  width: inherit;
+}

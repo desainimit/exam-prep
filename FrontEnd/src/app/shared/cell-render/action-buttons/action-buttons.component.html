@@ -1,0 +1,5 @@
+<div class="d-flex justify-content-center gap-2 my-2">
+  <button *ngIf="showEditButton" class="btn btn-primary bg-transparent" aria-hidden="true" (click)="onEdit()"><i class="bi bi-pencil-square text-primary"></i></button>
+  <button *ngIf="showDeleteButton" class="btn btn-danger bg-transparent" aria-hidden="true" (click)="onDelete()"><i class="bi bi-trash text-danger"></i></button>
+  <button *ngIf="showViewButton" class="btn btn-warning bg-transparent" aria-hidden="true" (click)="onView()"><i class="bi bi-eye text-warning"></i></button>
+</div>
