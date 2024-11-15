@@ -5,11 +5,13 @@ import { DatatableComponent } from './datatable/datatable.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { ActionButtonsComponent } from './cell-render/action-buttons/action-buttons.component';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { matDialogAnimations, MatDialogModule } from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ToggleSwitchComponent } from './cell-render/toggle-switch/toggle-switch.component';
 import { ConfirmComponent } from './confirm/confirm.component';
 import { CardComponent } from './card/card.component';
+import { ModalComponent } from './modal/modal.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { CardComponent } from './card/card.component';
     ToggleSwitchComponent,
     ConfirmComponent,
     CardComponent,
+    ModalComponent,
   ],
   imports: [
     CommonModule,
@@ -26,6 +29,8 @@ import { CardComponent } from './card/card.component';
     MatButtonModule,
     MatDialogModule,
     MatSlideToggleModule,
+    MatDialogModule,
+    MatIconModule,
   ],
   exports: [
     LoaderComponent,
@@ -34,6 +39,7 @@ import { CardComponent } from './card/card.component';
     ToggleSwitchComponent,
     ConfirmComponent,
     CardComponent,
+    ModalComponent,
   ],
 })
 export class SharedModule {}

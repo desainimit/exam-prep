@@ -6,5 +6,6 @@ export interface IAuthService {
   registerUser(user: IUser): Observable<any>;
   login(user: IUser): Observable<ILoginResponse>;
   logout(): Observable<any>;
+  loadRolePermissions(): void;
   getRolePermissions(): Promise<void>;
 }

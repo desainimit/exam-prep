@@ -1,14 +1,14 @@
 <mat-sidenav-container autosize="true">
   <mat-sidenav class="rounded-0" [ngClass]="!isCollapsed ? 'expanded' : 'w-auto'" [mode]="isMobile ? 'over' : 'side'" [opened]="isMobile ? 'false' : 'true'">
     <mat-nav-list (click)="onMenuItemClick()">
-      <a mat-list-item>
+      <a mat-list-item *ngxPermissionsOnly="'admin'">
         <span class="entry d-flex align-items-center justify-content-center gap-2" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <mat-icon>house</mat-icon>
           <span *ngIf="!isCollapsed">Home</span>
         </span>
       </a>
-      <a mat-list-item>
-        <span class="entry d-flex align-items-center justify-content-center gap-2" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a mat-list-item *ngxPermissionsOnly="'admin'">
+        <span class="entry d-flex align-items-center justify-content-center gap-2" routerLink="/user" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <mat-icon>person</mat-icon>
           <span *ngIf="!isCollapsed">Users</span>
         </span>

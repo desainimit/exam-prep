@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<div mat-dialog-content>
+  <ng-container *ngIf="data.contentTemplate">
+    <ng-container *ngTemplateOutlet="data.contentTemplate"></ng-container>
+  </ng-container>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close cdkFocusInitial>Close</button>
+  <!-- <button mat-button (click)="submit()">{{data.submitText}}</button> -->
+</div>

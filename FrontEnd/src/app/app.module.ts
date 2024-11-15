@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import {
   BrowserModule,
   provideClientHydration,
@@ -19,8 +19,18 @@ import {
 } from '@core/interceptors/base-url.interceptor';
 import { tokenInterceptor } from '@core/interceptors/token.interceptor';
 import { serverErrorInterceptor } from '@core/interceptors/server-error.interceptor';
+import { websocket_Url } from '@core/services/websocket.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxPermissionsModule } from 'ngx-permissions';
+import { AuthService } from '@core/services/auth.service';
+
+function initializeApp(authService: AuthService): () => Promise<void> {
+  return () =>
+    new Promise((resolve, reject) => {
+      authService.loadRolePermissions();
+      resolve();
+    });
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,6 +52,12 @@ import { NgxPermissionsModule } from 'ngx-permissions';
   ],
   providers: [
     provideClientHydration(),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [AuthService],
+      multi: true,
+    },
     provideHttpClient(
       withInterceptors([
         BaseUrlInterceptor,
@@ -52,6 +68,10 @@ import { NgxPermissionsModule } from 'ngx-permissions';
     {
       provide: API_URL,
       useValue: environment.API_URL,
+    },
+    {
+      provide: websocket_Url,
+      useValue: environment.SOCKET_URL,
     },
   ],
   bootstrap: [AppComponent],

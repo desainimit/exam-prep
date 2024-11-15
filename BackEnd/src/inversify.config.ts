@@ -2,7 +2,7 @@ import { Container } from "inversify";
 import { TYPES } from "@constants";
 
 // Importing Services
-import { AuthService } from "@services";
+import { AuthService, WebSocketService } from "@services";
 import { AuthMiddleware, ErrorHandlerMiddleware } from "@middlewares";
 
 // Importing Middleware
@@ -10,6 +10,10 @@ import { AuthMiddleware, ErrorHandlerMiddleware } from "@middlewares";
 const container = new Container();
 
 // Binding Services
+container
+  .bind<WebSocketService>(TYPES.WebSocketService)
+  .to(WebSocketService)
+  .inSingletonScope();
 container.bind<AuthService>(TYPES.AuthService).to(AuthService);
 
 // Binding Middleware

@@ -27,6 +27,7 @@
                   <label for="password" class="form-label">Password</label>
                   <div *ngIf="loginForm.controls['password'].errors && isSubmitted" class="invalid-feedback">
                     <div *ngIf="loginForm.controls['password'].errors?.['required']">Password is required</div>
+                    <div *ngIf="loginForm.controls['password'].errors?.['minlength']">Password must be at least 6 characters</div>
                   </div>
                 </div>
               </div>

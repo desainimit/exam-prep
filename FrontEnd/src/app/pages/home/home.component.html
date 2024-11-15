@@ -1,1 +1,8 @@
-<p>home works!</p>
+<button mat-raised-button color="primary" (click)="openDialog(content, 'home')">Open Dialog</button>
+
+<ng-template #content>
+  <form (ngSubmit)="submitForm()">
+    <input matInput placeholder="Name" name="name" required>
+    <input matInput placeholder="Email" name="email" required>
+  </form>
+</ng-template>

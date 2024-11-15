@@ -7,6 +7,7 @@ import { NgxPermissionsService } from 'ngx-permissions';
 import { IUser } from '@core/models/interfaces/dtos/IUser.dto';
 import { ILoginResponse } from '@core/models/interfaces/dtos/ILoginResponse.dto';
 import { IAuthService } from '@core/models/interfaces/services/IAuthServices';
+import { WebsocketService } from './websocket.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,7 @@ export class AuthService implements IAuthService {
     private http: HttpClient,
     private tokenService: TokenService,
     private ngxPermissionService: NgxPermissionsService,
+    private webSocketService: WebsocketService,
     @Inject(API_URL) private apiUrl: string
   ) {}
 
@@ -36,8 +38,8 @@ export class AuthService implements IAuthService {
           const user = res.data.user;
           this.tokenService.setUserData(user);
           this.tokenService.setToken('accessToken', res.data.accessToken);
-
-          this.ngxPermissionService.loadPermissions(user.role);
+          this.loadRolePermissions();
+          this.webSocketService.connect();
         })
       );
   }
@@ -51,8 +53,20 @@ export class AuthService implements IAuthService {
         tap(() => {
           this.tokenService.clearToken('accessToken');
           this.ngxPermissionService.flushPermissions();
+          this.webSocketService.close();
         })
       );
+  }
+
+  loadRolePermissions(): void {
+    try {
+      const user = this.tokenService.getUserData();
+      if (user) {
+        this.ngxPermissionService.addPermission(user.role);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   getRolePermissions(): Promise<void> {
@@ -65,7 +79,6 @@ export class AuthService implements IAuthService {
           next: (res: any) => {
             if (res.status) {
               const permissions = res.data.permissions;
-
               this.ngxPermissionService.loadPermissions(permissions);
               resolve(res);
             }

@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Injectable, TemplateRef } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { ConfirmComponent } from '@shared/confirm/confirm.component';
+import { ModalComponent } from '@app/shared/modal/modal.component';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,29 @@ export class SharedService {
     });
 
     return dialogRef.afterClosed().toPromise();
+  }
+
+  openModal(
+    contentTemplate: TemplateRef<any>,
+    title = '',
+    width: string = '500px',
+    submitText: string = 'Submit',
+    submitFn: Function = () => {}
+  ): void {
+    this.dialog.open(ModalComponent, {
+      width: width,
+      data: {
+        title,
+        contentTemplate,
+        submitText,
+        submitFn,
+      },
+      disableClose: true,
+    });
+  }
+
+  closeModal(): void {
+    this.dialog.closeAll();
   }
 
   toggleMenu() {

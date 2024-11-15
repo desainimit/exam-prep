@@ -9,10 +9,14 @@ import { container } from "@inversifyConfig";
 import path from "path";
 import cookiesParser from "cookie-parser";
 import { dbConnect } from "@db";
-import { CustomError } from "@utils";
-import { STATUSCODE, TYPES, MESSAGE } from "@constants";
+import { ErrorHandler } from "@utils";
+import { TYPES } from "@constants";
+import { WebSocketService } from "@services";
 
 const app = express();
+const webSocketService = container.get<WebSocketService>(
+  TYPES.WebSocketService
+);
 const allowedOrigins = [config.get("CLIENT_URL"), "http://192.168.4.66:4200"];
 
 app.use(
@@ -53,29 +57,8 @@ const server = new InversifyExpressServer(container, app, {
 server.setConfig(async (app) => {
   try {
     await dbConnect();
-
-    app.use(
-      cors({
-        origin: (origin, callback) => {
-          if (!origin) return callback(null, true); // Allow requests with no origin (mobile apps, Postman, etc.)
-
-          if (allowedOrigins.includes(origin)) {
-            callback(null, true);
-          } else {
-            callback(new Error("Not allowed by CORS"));
-          }
-        },
-        credentials: true,
-      })
-    );
-
-    app.options("*", cors());
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      throw new CustomError(STATUSCODE.BAD_REQUEST, error.message);
-    } else {
-      throw new CustomError(STATUSCODE.BAD_REQUEST, MESSAGE.BAD_REQUEST);
-    }
+  } catch (error) {
+    ErrorHandler(error);
   }
 });
 
@@ -97,6 +80,8 @@ server.setErrorConfig((app) => {
   );
 });
 
-server.build().listen(config.get("PORT"), () => {
+const buildedServer = server.build().listen(config.get("PORT"), async () => {
   console.log(`Server running on port ${config.get("PORT")}`);
 });
+
+webSocketService.startServer(buildedServer);

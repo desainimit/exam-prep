@@ -34,7 +34,10 @@ export class LoginComponent implements OnInit {
   buildForm(): void {
     this.loginForm = this.fb.group({
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
     });
   }
 
@@ -46,14 +49,16 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.loginForm.value as IUser).subscribe({
         next: (res: any) => {
           if (res.status) {
-            this.isLoading = false;
-            this.router.navigate(['/']);
             this.toastService.showSuccess(res.message);
+            this.isLoading = false;
           }
         },
         error: () => {
           this.isLoading = false;
           this.isSubmitted = false;
+        },
+        complete: () => {
+          this.router.navigate(['/']);
         },
       });
     } else {
